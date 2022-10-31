@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+    environment {
+        TESTGO = credentials('fortest')
+    }
+    stages {
+        stage("test"){
+            steps{
+                cleanWs()
+                script{
+                    sh """
+                    echo "test"
+                    echo $TESTGO
+                    git clone https://github.com/supercodershot/test.git
+                    cat test/app.py
+                    docker pull nginx
+                    """
+                }
+            }
+        }
+    }
+}
